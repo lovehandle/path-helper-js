@@ -1,7 +1,7 @@
 window.PathHelper = class PathHelper
 
   # Get base path of element, element's siblings,
-  # and element's parents, and element's parent's siblings
+  # element's parents, and element's parent's siblings
   # e.g. body > div#id.class:nth-child(n) + div#id.class:nth-child(n) > el#id.class:nth-child(n)
 
   get_path: (el, path) ->
