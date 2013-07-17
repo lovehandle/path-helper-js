@@ -1,5 +1,9 @@
 window.PathHelper = class PathHelper
 
+  # Get base path of element, element's siblings,
+  # and element's parents, and element's parent's siblings
+  # e.g. body > div#id.class:nth-child(n) + div#id.class:nth-child(n) > el#id.class:nth-child(n)
+
   get_path: (el, path) ->
    path = path or []
    if not el or ( @get_node_name(el) == "html")
@@ -8,6 +12,9 @@ window.PathHelper = class PathHelper
    path.unshift( @get_child_selector(el) )
    @get_path(el.parentNode, path)
 
+
+  # Get element and element's siblings base paths
+  # e.g. div#id.class:nth-child(n) + el#id.class:nth-child(n)
 
   get_child_selector: (el) ->
     parent = el.parentNode
@@ -34,6 +41,8 @@ window.PathHelper = class PathHelper
     selector.push( @get_el_selector(el) )
     selector.join(" ")
 
+  # Get base path of element
+  # e.g. el#id.class:nth-child(n)
 
   get_el_selector: (el) ->
     selector = []
@@ -47,8 +56,14 @@ window.PathHelper = class PathHelper
     selector = selector.join("")
     selector.trim()
 
+  # Get node name of element
+  # e.g. "DIV"
+
   get_node_name: (el) ->
     el.nodeName.toLowerCase()
+
+  # Get class selector for element
+  # e.g. ".class1.class2.class3"
 
   get_class_selector: (el) ->
     if el.className
@@ -56,15 +71,23 @@ window.PathHelper = class PathHelper
       class_names = class_names.map (class_name) -> "." + class_name
       class_names.join("")
 
+  # Get id selector for element
+  # e.g. "#id"
+
   get_id_selector: (el) ->
     if el.id
       "#" + el.id
+
+  # Get nth-child selector for element
+  # e.g. ":nth-child(n)"
 
   get_nth_child_selector: (el) ->
     index = @get_index(el)
     if !!~index
       return ":nth-child(" + index + ")"
 
+
+  # Get index for element in relation to siblings
 
   get_index: (el) ->
     current = el.previousSibling
@@ -76,6 +99,8 @@ window.PathHelper = class PathHelper
       current = current.previousSibling
 
     index
+
+  # Get element siblings without text nodes
 
   get_siblings_without_text_nodes: (el) ->
     parent   = el.parentNode
