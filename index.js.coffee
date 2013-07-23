@@ -108,6 +108,6 @@ window.PathHelper = class PathHelper
     filtered = []
 
     for sibling in siblings
-      filtered.push(sibling) if sibling.nodeType != 3
+      filtered.push(sibling) if sibling.nodeName.substring(0,1) != '#'
 
     filtered
